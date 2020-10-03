@@ -56,6 +56,7 @@ class CommentController extends Controller
         }
     }
     //    dd($post_arr);
+    //   aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
         return view('comment', compact('the_post','comment'));
     }
 }
