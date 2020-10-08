@@ -1,0 +1,14 @@
+.comment {
+    background-color: antiquewhite;
+    height:100px;
+    width:100px;
+}
+
+.comment_text {
+    text-align: center;
+}
+
+.comment_button{
+    text-align: left;
+    
+}

@@ -6,7 +6,7 @@
     <title>laravel-news</title>
 </head>
 <body>
-<form method="post" action="{{ url('/entry') }}">　　
+<form method="post" action="{{ url('/') }}">　　
     @csrf
 	<div>
 		<label>タイトル</label><br />
@@ -15,7 +15,7 @@
 
 	<div>
 		<label>記事</label><br />
-		<textarea name="article"></textarea>
+		<textarea name="article" cols="50" rows="10"></textarea>
 	</div>
 
 	<input type="submit" value="投稿" /> 

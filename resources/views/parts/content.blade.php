@@ -13,9 +13,9 @@
     @break
     @endif
     <?php $news_arr = explode("," , $news);?>
-    <h2><?php echo $news_arr[0];
-    echo $news_arr[1];?></h2>	
-	<?php echo "<a href='http://ec2-13-230-193-221.ap-northeast-1.compute.amazonaws.com/comment?id=" . $news_arr[0] . "' >" . "記事全文・コメントを見る". "</a><br>\n"; ?>
+    <h3><?php echo $news_arr[1]; ?></h3>
+    <p><?php echo $news_arr[2];?><p>
+	<a href="{{route('comment', ['id' => $news_arr[0]]) }}">記事全文・コメントを見る</a><br>
     @endforeach
 </body>
 </html>
