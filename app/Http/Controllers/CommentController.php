@@ -50,19 +50,19 @@ class CommentController extends Controller
     public function delete(Request $request) {
         $post_id = $request->post_id;
         $comment_id = $request->comment_id;
-        $comment  = Storage::get('comment.txt');
-        $comments = explode("\n", $comment);
+        $content  = Storage::get('comment.txt');
+        $comments = explode("\n", $content);
+        // dd($comments);
         foreach($comments as $comment){
             $the_comment = explode(',' , $comment);
             if($the_comment[2] == $comment_id){
-                unset($comments[0]);
-                unset($comments[1]);
-                unset($comments[2]);
-                    $deleteComments = implode("\n", $comments);
-                    Storage::put('comment.txt', $deleteComments);
-                    break;
+                unset($the_comment[0]);
+                unset($the_comment[1]);
+                unset($the_comment[2]);
+                $deleteComments = implode(",", $the_comment);
+                Storage::put('comment.txt', $deleteComments);
+                break;
             }
-    
         }
         return redirect()->route('comment', ['id' => $post_id]);
     }
