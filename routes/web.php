@@ -17,7 +17,9 @@ use Illuminate\Support\Facades\Route;
 //     return view('welcome');
 // });
 
-Route::get('/','HomeController@show');
+Route::get('/','EntryController@show');
 Route::post('/entry','EntryController@entry');
-Route::get('/comment','CommentController@show');
+Route::post('/deletepost','EntryController@delete');
+Route::get('/comment/{id}','CommentController@show')->name('comment');
 Route::post('/addcom','CommentController@comment');
+Route::post('/delete','CommentController@delete');

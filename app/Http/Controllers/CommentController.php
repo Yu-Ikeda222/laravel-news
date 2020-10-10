@@ -3,60 +3,38 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
+use App\comment;
+use App\post;
+
 
 class CommentController extends Controller
 {
-    public function show(Request $request)
+    public function show($id)
     {
-        //idをつける
-        $post_id = $request->id;
-        //データを読み込んで改行で分ける
-        $posts_data = Storage::get('data.txt');
-        $posts = explode("\n", $posts_data);
-        //foreachでthe_postに入れる
-        $the_post = [];
-        foreach ($posts as $post) {
-            $post_arr = explode(',', $post);
-            if ($post_arr[0] == $post_id) {
-                $the_post['id'] = $post_arr[0];
-                $the_post['title'] = $post_arr[0];
-                $the_post['article'] = $post_arr[1];
-                break;
-            }
-        }
-        //データを一つずつ取り出す
-        $comment = Storage::get('comment.txt');
-        return view('comment', compact('the_post', 'comment'));
+        $input_data = post::find($id);
+        // dd($input_data);
+        $input_comment = comment::where('post_id', $id)->get();
+        // dd($input_comment);
+        return view('comment',['input_data' => $input_data,'input_comment' => $input_comment]);
+         
     }
 
     public function comment(Request $request)
     {
-        //フォームで送られてきた内容をテキストファイルに書き込み
-        $get = $request->comment;
-        $get_id = $request->post_id;
-        Storage::prepend('comment.txt', $get . "," . $get_id);
-        //データを一つずつ取り出す
-        $comment = Storage::get('comment.txt');
-        //データを読み込んで改行で分ける
-        $posts_data = Storage::get('data.txt');
-        $posts = explode("\n", $posts_data);
-        
-        //foreachでthe_postに入れる
-       //$the_post = [];
-        foreach ($posts as $post) {
-            $comment_arr = explode(',', $post);
-            dd($comment_arr);
-            if($comment_arr[1] == $get_id){
-            if(empty($post)){break;}
-            $post_arr = explode(',', $post);
-                $the_post['title'] = $post_arr[0];
-                $the_post['article'] = $post_arr[1];
-               
-        }
+        $input_comment = $request->only('post_id', 'comment');
+        $entry_comment = new comment();
+        $entry_comment->comment = $input_comment["comment"];
+        $entry_comment->post_id = $input_comment["post_id"];
+        $entry_comment->timestamps =false;
+        $entry_comment->save();
+        return redirect(route('comment',$entry_comment->post_id));
     }
-    //    dd($post_arr);
-    //   aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-        return view('comment', compact('the_post','comment'));
-    }
+
+     public function delete(Request $request) {
+         $comment_id = $request->comment_id;
+         $id = $request->post_id;
+         //dd($comment_id);
+         comment::find($comment_id)->delete();
+         return redirect(route('comment',['id'=>$id]));
+     } 
 }

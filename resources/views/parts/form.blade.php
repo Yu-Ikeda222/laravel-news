@@ -6,11 +6,11 @@
     <title>laravel-news</title>
 </head>
 <body>
-<form method="post" action="{{ url('/entry') }}">　　
+<form method="post" action="{{ url('/entry') }}">
     @csrf
 	<div>
 		<label>タイトル</label><br />
-		<input type="text" name="title" value="" placeholder="" />
+		<input type="text" name="title">
 	</div>
 
 	<div>
